@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.menu;
 
 import java.util.Arrays;
 
@@ -22,6 +22,15 @@ public enum Appetizer implements Menu {
                 .filter(appetizer -> appetizer.name.equals(userInput))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public int calculateTotalPrice(Integer amount) {
+        return price * amount;
+    }
+
+    public String toString() {
+        return name;
     }
 
 }

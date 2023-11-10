@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.menu;
 
 import java.util.Arrays;
 
@@ -18,6 +18,15 @@ public enum Dessert implements Menu {
     @Override
     public Dessert findByName(String userInput) {
         return Arrays.stream(Dessert.values()).filter(desert -> desert.name.equals(userInput)).findFirst().orElse(null);
+    }
+
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int calculateTotalPrice(Integer amount) {
+        return price * amount;
     }
 
 }
