@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.menu;
 
 public enum DefaultMenu implements Menu {
 
@@ -14,6 +14,15 @@ public enum DefaultMenu implements Menu {
     @Override
     public Menu findByName(String userInput) {
         return null;
+    }
+
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int calculateTotalPrice(Integer amount) {
+        return 0;
     }
 
 }

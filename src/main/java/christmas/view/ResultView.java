@@ -1,5 +1,7 @@
 package christmas.view;
 
+import christmas.domain.Order;
+
 /**
  * @author 민경수
  * @description result view
@@ -7,12 +9,15 @@ package christmas.view;
  **********************************************************************************************************************/
 public class ResultView {
 
-    public void printOrderedMenus() {
+    public void printOrderedMenus(Order order) {
         System.out.println("<주문 메뉴>");
+        System.out.println(order.toString());
     }
 
-    public void printTotalOrderedPrice() {
+    public void printTotalOrderedPrice(Order order) {
         System.out.println("<할인 전 총주문 금액>");
+        System.out.println(order.totalPrice());
+        System.out.println();
     }
 
     public void printGiftMenu() {
