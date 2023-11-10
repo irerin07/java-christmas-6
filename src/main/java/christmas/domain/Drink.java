@@ -2,7 +2,7 @@ package christmas.domain;
 
 import java.util.Arrays;
 
-public enum Drink implements Menu{
+public enum Drink implements Menu {
 
     ZERO_COKE("제로콜라", 3000),
     RED_WINE("레드와인", 60000),
