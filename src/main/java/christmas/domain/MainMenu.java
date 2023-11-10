@@ -1,8 +1,8 @@
-package christmas.domain.menu;
+package christmas.domain;
 
 import java.util.Arrays;
 
-public enum MainMenu implements Menu {
+public enum MainMenu implements Menu{
 
     T_BONE_STEAK("티본스테이크", 55000),
     BARBECUE_RIB("바비큐립", 54000),
@@ -19,17 +19,7 @@ public enum MainMenu implements Menu {
 
     @Override
     public MainMenu findByName(String userInput) {
-        return Arrays.stream(MainMenu.values()).filter(mainMenu -> mainMenu.name.equals(userInput)).findFirst()
-                .orElse(null);
-    }
-
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public int calculateTotalPrice(Integer amount) {
-        return price * amount;
+        return Arrays.stream(MainMenu.values()).filter(mainMenu -> mainMenu.name.equals(userInput)).findFirst().orElse(null);
     }
 
 }
