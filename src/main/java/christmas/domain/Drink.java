@@ -1,6 +1,9 @@
 package christmas.domain;
 
-public enum Drink {
+import java.util.Arrays;
+
+public enum Drink implements Menu{
+
     ZERO_COKE("제로콜라", 3000),
     RED_WINE("레드와인", 60000),
     CHAMPAGNE("샴페인", 25000);
@@ -12,4 +15,10 @@ public enum Drink {
         this.name = name;
         this.price = price;
     }
+
+    @Override
+    public Drink findByName(String userInput) {
+        return Arrays.stream(Drink.values()).filter(drink -> drink.name.equals(userInput)).findFirst().orElse(null);
+    }
+
 }

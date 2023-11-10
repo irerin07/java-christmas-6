@@ -1,30 +1,58 @@
 package christmas.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public enum ChristMasMenu {
 
-    DESSERT(Arrays.asList(DessertMenu.CHOCOLATE_CAKE, DessertMenu.ICE_CREAM)),
-    DRINK(Arrays.asList(Drink.ZERO_COKE, Drink.RED_WINE, Drink.CHAMPAGNE)),
-    MAIN_MENU(Arrays.asList(MainMenu.T_BONE_STEAK, MainMenu.BARBECUE_RIB, MainMenu.SEAFOOD_PASTA, MainMenu.CHRISTMAS_PASTA)),
-    APPETIZER(Arrays.asList(Appetizer.BUTTON_MUSHROOM_SOUP, Appetizer.TAPAS, Appetizer.CAESAR_SALAD));
+    NONE(Collections.EMPTY_LIST),
+    DESSERT(Arrays.asList(
+            Dessert.CHOCOLATE_CAKE,
+            Dessert.ICE_CREAM)
+    ),
+    DRINK(Arrays.asList(
+            Drink.ZERO_COKE,
+            Drink.RED_WINE,
+            Drink.CHAMPAGNE)
+    ),
+    MAIN_MENU(Arrays.asList(
+            MainMenu.T_BONE_STEAK,
+            MainMenu.BARBECUE_RIB,
+            MainMenu.SEAFOOD_PASTA,
+            MainMenu.CHRISTMAS_PASTA)
+    ),
+    APPETIZER(Arrays.asList(
+            Appetizer.BUTTON_MUSHROOM_SOUP,
+            Appetizer.TAPAS,
+            Appetizer.CAESAR_SALAD)
+    );
 
-    List<Enum<?>> items;
+    private static final Map<List<? extends Menu>, ChristMasMenu> CHRISTMAS_MENU_BY_CATEGORY;
 
-    ChristMasMenu(List<Enum<?>> items) {
+    static {
+        CHRISTMAS_MENU_BY_CATEGORY = new HashMap<>();
+        for (ChristMasMenu category : ChristMasMenu.values()) {
+            CHRISTMAS_MENU_BY_CATEGORY.put(category.items, category);
+        }
+    }
+
+    private List<? extends Menu> items;
+
+    ChristMasMenu(List<? extends Menu> items) {
         this.items = items;
     }
 
-    public static Enum<?> findItemByName(String itemName) {
-        for (ChristMasMenu menu : ChristMasMenu.values()) {
-            for (Enum<?> item : menu.items) {
-                if (item.name().equals(itemName)) {
-                    return item;
-                }
-            }
-        }
-        return null; // Item not found
+    public static Menu findMenu(String userInput) {
+        return CHRISTMAS_MENU_BY_CATEGORY.values().stream()
+                .flatMap(christMasMenu -> christMasMenu.items.stream())
+                .map(menuItem -> menuItem.findByName(userInput))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(DefaultMenu.NONE);
     }
 
 }

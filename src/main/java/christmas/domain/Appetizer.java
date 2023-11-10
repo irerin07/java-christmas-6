@@ -1,6 +1,8 @@
 package christmas.domain;
 
-public enum Appetizer{
+import java.util.Arrays;
+
+public enum Appetizer implements Menu {
 
     BUTTON_MUSHROOM_SOUP("양송이 스프", 6000),
     TAPAS("타파스", 5500),
@@ -12,6 +14,14 @@ public enum Appetizer{
     Appetizer(String name, int price) {
         this.name = name;
         this.price = price;
+    }
+
+    @Override
+    public Appetizer findByName(String userInput) {
+        return Arrays.stream(Appetizer.values())
+                .filter(appetizer -> appetizer.name.equals(userInput))
+                .findFirst()
+                .orElse(null);
     }
 
 }
