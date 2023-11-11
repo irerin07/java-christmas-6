@@ -1,11 +1,13 @@
 package christmas;
 
+import christmas.domain.InputValidationHelper;
 import christmas.domain.Order;
 import christmas.domain.OrderedMenu;
 import christmas.domain.menu.ChristMasMenu;
 import christmas.domain.menu.Menu;
 import christmas.view.InputVIew;
 import christmas.view.ResultView;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +29,11 @@ public class EventPlanner {
     }
 
     public Order takeOrders() {
-        int visitDate = inputVIew.getVisitDate();
-        List<OrderedMenu> orderedMenus = separateMenus(inputVIew.getOrderingMenus());
+        LocalDate visitDate = InputValidationHelper.get(() -> inputVIew.getVisitDate());
+
+        List<OrderedMenu> orderedMenus = InputValidationHelper.get(() -> inputVIew.getOrderingMenus());
 
         return Order.of(LocalDateTime.now(), visitDate, orderedMenus);
-    }
-
-    private List<OrderedMenu> separateMenus(Map<String, Integer> menus) {
-        List<OrderedMenu> result = new ArrayList<>();
-
-        for (String menu : menus.keySet()) {
-            Menu christmasMenu = ChristMasMenu.findMenu(menu);
-            result.add(OrderedMenu.of(christmasMenu, menus.get(menu)));
-        }
-
-        return result;
     }
 
 }

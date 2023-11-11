@@ -1,6 +1,13 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.domain.InputValidationHelper;
+import christmas.domain.OrderedMenu;
+import christmas.domain.menu.ChristMasMenu;
+import christmas.domain.menu.Menu;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -15,24 +22,56 @@ public class InputVIew {
 
     private static final String DELIMITER = ",";
     private static final String MENU_REGEX = "^[가-힣]+-\\d+$";
+    private static final Integer EVENT_MONTH = 12;
+    public static final Integer EVENT_YEAR = 2023;
 
-    public int getVisitDate() {
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
-        return validateNumberInput(Console.readLine());
+    public LocalDate getVisitDate() {
+        System.out.println(EVENT_MONTH + "월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+
+        return validateDate(validateNumberInput(Console.readLine()));
     }
 
-    public Map<String, Integer> getOrderingMenus() {
+    private LocalDate validateDate(int date) {
+        try {
+            return LocalDate.of(EVENT_YEAR, EVENT_MONTH, date);
+        } catch (DateTimeException e) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        }
+    }
+
+    public List<OrderedMenu> getOrderingMenus() {
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
 
-        return getMenus(Console.readLine());
+        return separateMenus(getMenus(Console.readLine()));
+    }
+
+    private List<OrderedMenu> separateMenus(Map<String, Integer> menus) {
+        List<OrderedMenu> result = new ArrayList<>();
+
+        for (String menu : menus.keySet()) {
+            Menu christmasMenu = ChristMasMenu.findMenu(menu);
+            result.add(OrderedMenu.of(christmasMenu, menus.get(menu)));
+        }
+
+        return result;
     }
 
     private Map<String, Integer> getMenus(String input) {
         List<String> strings = Arrays.stream(input.split(DELIMITER)).toList();
 
         validateMenuInput(strings);
+        validateDuplicateMenu(strings);
 
-        return validateDuplicateMenu(strings);
+        Map<String, Integer> stringIntegerMap = validateDuplicateMenu(strings);
+        validateOrderAmount(stringIntegerMap);
+
+        return stringIntegerMap;
+    }
+
+    private void validateOrderAmount(Map<String, Integer> stringIntegerMap) {
+        if (stringIntegerMap.values().stream().reduce(0, Integer::sum) > 20) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
     }
 
     private Map<String, Integer> validateDuplicateMenu(List<String> strings) {
@@ -41,7 +80,7 @@ public class InputVIew {
                     .map(element -> element.split("-"))
                     .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
         } catch (IllegalStateException e) {
-            throw new IllegalStateException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
     }
 
@@ -49,7 +88,7 @@ public class InputVIew {
         try {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         }
     }
 

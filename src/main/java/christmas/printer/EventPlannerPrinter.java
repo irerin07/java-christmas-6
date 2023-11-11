@@ -1,6 +1,7 @@
 package christmas.printer;
 
 import christmas.domain.Order;
+import christmas.domain.SaleProfit;
 import christmas.view.ResultView;
 
 /**
@@ -12,20 +13,21 @@ public class EventPlannerPrinter {
 
     private final ResultView resultView;
 
+    private static final Integer EVENT_MONTH = 12;
+
     public EventPlannerPrinter(ResultView resultView) {
         this.resultView = resultView;
     }
 
-    public void print(Order order) {
-        System.out.println("12월 26일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+    public void printHeader() {
+        System.out.println("안녕하세요! 우테코 식당 " + EVENT_MONTH + "월 이벤트 플래너입니다.");
+    }
+
+    public void print(Order order, SaleProfit saleProfit) {
+        System.out.println(order.getVisitDate() + "에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
         System.out.println();
-        resultView.printOrderedMenus(order);
-        resultView.printTotalOrderedPrice(order);
-        resultView.printGiftMenu();
-        resultView.printBenefits();
-        resultView.printTotalBenefitAmount();
-        resultView.printEstimatedCheckoutPrice();
-        resultView.printEventBadge();
+
+        resultView.printEvent(order, saleProfit);
     }
 
 }
