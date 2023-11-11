@@ -1,8 +1,12 @@
 package christmas.domain;
 
+import christmas.domain.menu.Dessert;
+import christmas.domain.menu.MainMenu;
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -37,10 +41,10 @@ public class Order {
         return sb.toString();
     }
 
-    public int totalPrice() {
-        int result = 0;
+    public BigDecimal totalPrice() {
+        BigDecimal result = BigDecimal.ZERO;
         for (OrderedMenu orderedMenu : orderedMenus) {
-            result += orderedMenu.calculatePrice();
+            result = result.add(BigDecimal.valueOf(orderedMenu.calculatePrice()));
         }
 
         return result;
@@ -55,11 +59,12 @@ public class Order {
     }
 
     public boolean isSpecialSaleDay() {
+        // TODO 달력에 별표가 있는지 체크하는 기능
         return false;
     }
 
     public boolean isGiftMenu() {
-        return totalPrice() > 120000;
+        return totalPrice().compareTo(BigDecimal.valueOf(120000)) != -1;
     }
 
     public boolean isChristmasSalePeriod() {
@@ -72,4 +77,37 @@ public class Order {
         }
     }
 
+    public long calculateChristmasEventBenefit() {
+        long between = ChronoUnit.DAYS.between(LocalDate.of(2023, 12, 1), visitDate);
+
+        return 1000 + (between * 100);
+    }
+
+    public boolean isWeekend() {
+        return (visitDate.getDayOfWeek() == DayOfWeek.FRIDAY || visitDate.getDayOfWeek() == DayOfWeek.SATURDAY);
+    }
+
+    public int calculateWeekDayBenefit() {
+        int weekDayBenefit = 0;
+        for (OrderedMenu orderedMenu : orderedMenus) {
+            if (orderedMenu.isOfType(Dessert.class)) {
+                weekDayBenefit += orderedMenu.calculateBenefit();
+            }
+        }
+        return weekDayBenefit;
+    }
+
+    public int calculateWeekEndBenefit() {
+        int weekDayBenefit = 0;
+        for (OrderedMenu orderedMenu : orderedMenus) {
+            if (orderedMenu.isOfType(MainMenu.class)) {
+                weekDayBenefit += orderedMenu.calculateBenefit();
+            }
+        }
+        return weekDayBenefit;
+    }
+
+    public int calculateSpecialDayBenefit() {
+        return 1000;
+    }
 }

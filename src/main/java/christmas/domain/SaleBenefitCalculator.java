@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import christmas.domain.menu.GiftMenu;
+
 /**
  * @author 민경수
  * @description sale benefit calculator
@@ -7,35 +9,42 @@ package christmas.domain;
  **********************************************************************************************************************/
 public class SaleBenefitCalculator {
 
-    public SaleProfit getProfit(Order order) {
+    public SaleProfit test(Order order) {
+        int weekDay = weekDay(order);
+        int weekEnd = weekEnd(order);
+        long christmasDDayEvent = order.calculateChristmasEventBenefit();
+        int specialDay = specialDay(order);
+        EventBadge eventBadge = getEventBadge();
+
+        return SaleProfit.of(GiftMenu.CHAMPAGNE, weekDay, weekEnd, christmasDDayEvent, specialDay, eventBadge);
+    }
+
+    private EventBadge getEventBadge() {
         return null;
     }
 
-    private void isChristmasDDayEventPeriod(Order order) {
-        boolean christmasSalePeriod = order.isChristmasSalePeriod();
-        if (christmasSalePeriod) {
-
+    private int weekDay(Order order) {
+        if (order.isWeekDay()) {
+            return order.calculateWeekDayBenefit();
         }
+
+        return 0;
     }
 
-    private void isWeekDay() {
+    private int weekEnd(Order order) {
+        if (order.isWeekend()) {
+            return order.calculateWeekEndBenefit();
+        }
 
+        return 0;
     }
 
-    private void isWeekend() {
+    private int specialDay(Order order) {
+        if (order.isSpecialSaleDay()) {
+            return order.calculateSpecialDayBenefit();
+        }
 
-    }
-
-    private void isSpecialSaleDate() {
-
-    }
-
-    private void isSpecialGiftReceivable() {
-
-    }
-
-    private void isBadgeReceivable() {
-
+        return 0;
     }
 
 }

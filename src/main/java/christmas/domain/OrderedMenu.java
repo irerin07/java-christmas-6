@@ -28,4 +28,12 @@ public class OrderedMenu {
     public int calculatePrice() {
         return menu.calculateTotalPrice(amount);
     }
+
+    public boolean isOfType(Class<? extends Menu> menuType) {
+        return menuType.isInstance(menu);
+    }
+
+    public int calculateBenefit() {
+        return 2023 * amount;
+    }
 }

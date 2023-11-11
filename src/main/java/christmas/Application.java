@@ -5,22 +5,22 @@ import christmas.domain.SaleBenefitCalculator;
 import christmas.domain.SaleProfit;
 import christmas.printer.EventPlannerPrinter;
 import christmas.view.InputVIew;
-import christmas.view.ResultView;
+import christmas.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         InputVIew inputVIew = new InputVIew();
-        ResultView resultView = new ResultView();
+        OutputView outputView = new OutputView();
 
-        EventPlanner eventPlanner = new EventPlanner(inputVIew, resultView);
+        EventPlanner eventPlanner = new EventPlanner(inputVIew, outputView);
 
         Order order = eventPlanner.takeOrders();
 
         SaleBenefitCalculator saleBenefitCalculator = new SaleBenefitCalculator();
-        SaleProfit saleProfit = saleBenefitCalculator.getProfit(order);
+        SaleProfit saleProfit = saleBenefitCalculator.test(order);
 
-        EventPlannerPrinter eventPlannerPrinter = new EventPlannerPrinter(resultView);
+        EventPlannerPrinter eventPlannerPrinter = new EventPlannerPrinter(outputView);
         eventPlannerPrinter.printHeader();
         eventPlannerPrinter.print(order, saleProfit);
     }

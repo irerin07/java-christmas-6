@@ -2,7 +2,7 @@ package christmas.printer;
 
 import christmas.domain.Order;
 import christmas.domain.SaleProfit;
-import christmas.view.ResultView;
+import christmas.view.OutputView;
 
 /**
  * @author 민경수
@@ -11,12 +11,12 @@ import christmas.view.ResultView;
  **********************************************************************************************************************/
 public class EventPlannerPrinter {
 
-    private final ResultView resultView;
+    private final OutputView outputView;
 
     private static final Integer EVENT_MONTH = 12;
 
-    public EventPlannerPrinter(ResultView resultView) {
-        this.resultView = resultView;
+    public EventPlannerPrinter(OutputView outputView) {
+        this.outputView = outputView;
     }
 
     public void printHeader() {
@@ -27,7 +27,7 @@ public class EventPlannerPrinter {
         System.out.println(order.getVisitDate() + "에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
         System.out.println();
 
-        resultView.printEvent(order, saleProfit);
+        outputView.printEvent(order, saleProfit);
     }
 
 }
