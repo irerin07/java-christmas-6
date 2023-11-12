@@ -65,7 +65,7 @@ public class Order {
 
     public boolean isSpecialSaleDay() {
         // TODO 달력에 별표가 있는지 체크하는 기능
-        return false;
+        return SpecialEventSale.isSpecialEventDate(visitDate.getDayOfMonth());
     }
 
     public boolean isGiftMenu() {

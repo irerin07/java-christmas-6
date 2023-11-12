@@ -71,7 +71,7 @@ public class OutputView {
                 System.out.println(giftMenuBenefit);
             }
         }
-        
+
     }
 
     private void printTotalBenefitAmount(Order order, SaleProfit saleProfit) {
