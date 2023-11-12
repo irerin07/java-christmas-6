@@ -18,7 +18,7 @@ public class SaleProfit {
     private final EventBadge eventBadge;
 
 
-    public SaleProfit(GiftMenu giftMenu, int weekDay, int weekEnd, int christmasDDayEvent, int specialDay,
+    private SaleProfit(GiftMenu giftMenu, int weekDay, int weekEnd, int christmasDDayEvent, int specialDay,
                       EventBadge eventBadge) {
         this.giftMenu = giftMenu;
         this.weekdaySaleAmount = weekDay;
@@ -28,8 +28,8 @@ public class SaleProfit {
         this.eventBadge = EventBadge.findByBenefirPrice(weekdaySaleAmount + weekendSaleAmount + christmasDDayEventSaleAmount + specialDay + giftMenu.price());
     }
 
-    public static SaleProfit of(GiftMenu giftMenu, int weekDay, int weekEnd, int christmasDDayEvent, int specialDay,
-                                EventBadge eventBadge) {
+    public static SaleProfit ofVisitDate(GiftMenu giftMenu, int weekDay, int weekEnd, int christmasDDayEvent, int specialDay,
+                                         EventBadge eventBadge) {
         return new SaleProfit(giftMenu, weekDay, weekEnd, christmasDDayEvent, specialDay, eventBadge);
     }
 
@@ -37,52 +37,52 @@ public class SaleProfit {
         return BigDecimal.valueOf(weekdaySaleAmount + weekendSaleAmount + christmasDDayEventSaleAmount + specialDay + giftMenu.price());
     }
 
+    public boolean christmasPeriodSaleApplied() {
+        return christmasDDayEventSaleAmount != 0;
+    }
 
     public String getChristmasEventBenefit() {
         return "크리스마스 디데이 할인: -" + christmasDDayEventSaleAmount;
-    }
-
-    public String getWeekDayBenefit() {
-        return "평일 할인: -" + weekdaySaleAmount;
-    }
-
-    public String getWeekEndBenefit() {
-        return "주말 할인: -" + weekendSaleAmount;
-    }
-
-    public String getSpecialSaleDayBenefit() {
-        return "특별 할인: -" + specialDay;
-    }
-
-    public String getGiftMenuBenefit() {
-        return "증정 이벤트: -" + giftMenu.price();
-    }
-
-    public String getEventBadge() {
-        return eventBadge.getName();
-    }
-
-    public BigDecimal getGiftMenuIncludedPrice(BigDecimal totalPrice) {
-        return totalPrice.add(BigDecimal.valueOf(giftMenu.price()));
-    }
-
-    public boolean christmasPeriodSaleApplied() {
-        return christmasDDayEventSaleAmount != 0;
     }
 
     public boolean weekdaySaleApplied() {
         return weekdaySaleAmount != 0;
     }
 
+    public String getWeekDayBenefit() {
+        return "평일 할인: -" + weekdaySaleAmount;
+    }
+
     public boolean weekendSaleApplied() {
         return weekendSaleAmount !=0;
+    }
+
+    public String getWeekEndBenefit() {
+        return "주말 할인: -" + weekendSaleAmount;
     }
 
     public boolean specialDaySaleApplied() {
         return specialDay != 0;
     }
 
+    public String getSpecialSaleDayBenefit() {
+        return "특별 할인: -" + specialDay;
+    }
+
     public String getGiftMenu(Order order) {
         return GiftMenu.findByOrderPrice(order.totalPrice().intValue());
     }
+
+    public String getGiftMenuBenefit() {
+        return "증정 이벤트: -" + giftMenu.price();
+    }
+
+    public BigDecimal getGiftMenuIncludedPrice(BigDecimal totalPrice) {
+        return totalPrice.add(BigDecimal.valueOf(giftMenu.price()));
+    }
+
+    public String getEventBadge() {
+        return eventBadge.getName();
+    }
+
 }

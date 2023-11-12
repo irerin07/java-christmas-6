@@ -2,7 +2,7 @@ package christmas.domain.menu;
 
 import java.util.Arrays;
 
-public enum MainMenu implements Menu{
+public enum MainMenu implements Menu {
 
     T_BONE_STEAK("티본스테이크", 55000),
     BARBECUE_RIB("바비큐립", 54000),

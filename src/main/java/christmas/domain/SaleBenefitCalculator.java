@@ -10,12 +10,22 @@ import christmas.domain.menu.GiftMenu;
 public class SaleBenefitCalculator {
 
     public SaleProfit getBenefits(Order order) {
-        int weekDay = weekDay(order);
-        int weekEnd = weekEnd(order);
-        int christmasDDayEvent = order.calculateChristmasEventBenefit();
-        int specialDay = specialDay(order);
+        return SaleProfit.ofVisitDate(
+                giftMenu(order),
+                weekDay(order),
+                weekEnd(order),
+                order.calculateChristmasEventBenefit(),
+                specialDay(order),
+                EventBadge.NONE
+        );
+    }
 
-        return SaleProfit.of(GiftMenu.CHAMPAGNE, weekDay, weekEnd, christmasDDayEvent, specialDay, EventBadge.NONE);
+    private GiftMenu giftMenu(Order order) {
+        if (order.isGiftMenu()) {
+            return GiftMenu.CHAMPAGNE;
+        }
+
+        return GiftMenu.NONE;
     }
 
     private int weekDay(Order order) {

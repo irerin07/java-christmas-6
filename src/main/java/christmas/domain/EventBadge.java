@@ -19,8 +19,11 @@ public enum EventBadge {
     }
 
     public static EventBadge findByBenefirPrice(int benefirPrice) {
-        return Arrays.stream(EventBadge.values()).filter(eventBadge -> eventBadge.minimumAmount <= benefirPrice
-                && eventBadge.maximumAmount >= benefirPrice).findFirst().orElse(NONE);
+        return Arrays.stream(EventBadge.values())
+                .filter(eventBadge -> eventBadge.minimumAmount <= benefirPrice
+                        && eventBadge.maximumAmount >= benefirPrice)
+                .findFirst()
+                .orElse(NONE);
     }
 
     public String getName() {

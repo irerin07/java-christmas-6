@@ -1,7 +1,5 @@
 package christmas.domain.menu;
 
-import java.util.Arrays;
-
 public enum GiftMenu {
 
     NONE("없음", 0, 0, 119999),

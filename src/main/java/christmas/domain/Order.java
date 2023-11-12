@@ -20,7 +20,7 @@ public class Order {
     private final LocalDate visitDate;
     private final List<OrderedMenu> orderedMenus;
 
-    public Order(LocalDateTime receivedTime, LocalDate visitDate, List<OrderedMenu> orderedMenus) {
+    private Order(LocalDateTime receivedTime, LocalDate visitDate, List<OrderedMenu> orderedMenus) {
         this.receivedTime = receivedTime;
 
         validateVisitDate(visitDate);
@@ -28,7 +28,7 @@ public class Order {
         this.orderedMenus = orderedMenus;
     }
 
-    public static Order of(LocalDateTime receivedTime, LocalDate visitDate, List<OrderedMenu> orderedMenus) {
+    public static Order ofVisitDate(LocalDateTime receivedTime, LocalDate visitDate, List<OrderedMenu> orderedMenus) {
         return new Order(receivedTime, visitDate, orderedMenus);
     }
 
@@ -64,7 +64,6 @@ public class Order {
     }
 
     public boolean isSpecialSaleDay() {
-        // TODO 달력에 별표가 있는지 체크하는 기능
         return SpecialEventSale.isSpecialEventDate(visitDate.getDayOfMonth());
     }
 
@@ -99,6 +98,7 @@ public class Order {
                 weekDayBenefit += orderedMenu.calculateBenefit();
             }
         }
+
         return weekDayBenefit;
     }
 
@@ -109,10 +109,12 @@ public class Order {
                 weekDayBenefit += orderedMenu.calculateBenefit();
             }
         }
+
         return weekDayBenefit;
     }
 
     public int calculateSpecialDayBenefit() {
-        return 1000;
+        return SpecialEventSale.getSaleAmount(visitDate.getDayOfMonth());
     }
+
 }

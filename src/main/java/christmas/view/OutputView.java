@@ -28,7 +28,8 @@ public class OutputView {
 
     private void printTotalOrderedPrice(Order order) {
         System.out.println("<할인 전 총주문 금액>");
-        System.out.println(order.totalPrice());
+        String format = String.format("%,.0f원", order.totalPrice());
+        System.out.println(format);
         System.out.println();
     }
 
@@ -76,8 +77,8 @@ public class OutputView {
 
     private void printTotalBenefitAmount(Order order, SaleProfit saleProfit) {
         System.out.println("<총혜택 금액>");
-
-        System.out.println("-" + saleProfit.totalProfit() + "원");
+        String format = String.format("-%,.0f원", saleProfit.totalProfit());
+        System.out.println(format);
     }
 
     private void printEstimatedCheckoutPrice(Order order, SaleProfit saleProfit) {
@@ -87,8 +88,8 @@ public class OutputView {
         if (order.isGiftMenu()) {
             totalPrice = saleProfit.getGiftMenuIncludedPrice(order.totalPrice());
         }
-
-        System.out.println(totalPrice.subtract(saleProfit.totalProfit()));
+        String format = String.format("%,.0f원", totalPrice.subtract(saleProfit.totalProfit()));
+        System.out.println(format);
         System.out.println();
     }
 

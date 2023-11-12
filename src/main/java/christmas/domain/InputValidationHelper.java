@@ -1,6 +1,5 @@
 package christmas.domain;
 
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -17,7 +16,7 @@ public class InputValidationHelper {
         while (true) {
             try {
                 return supplier.get();
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println(e.getMessage());
             }
         }
