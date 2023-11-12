@@ -9,18 +9,13 @@ import christmas.domain.menu.GiftMenu;
  **********************************************************************************************************************/
 public class SaleBenefitCalculator {
 
-    public SaleProfit test(Order order) {
+    public SaleProfit getBenefits(Order order) {
         int weekDay = weekDay(order);
         int weekEnd = weekEnd(order);
-        long christmasDDayEvent = order.calculateChristmasEventBenefit();
+        int christmasDDayEvent = order.calculateChristmasEventBenefit();
         int specialDay = specialDay(order);
-        EventBadge eventBadge = getEventBadge();
 
-        return SaleProfit.of(GiftMenu.CHAMPAGNE, weekDay, weekEnd, christmasDDayEvent, specialDay, eventBadge);
-    }
-
-    private EventBadge getEventBadge() {
-        return null;
+        return SaleProfit.of(GiftMenu.CHAMPAGNE, weekDay, weekEnd, christmasDDayEvent, specialDay, EventBadge.NONE);
     }
 
     private int weekDay(Order order) {

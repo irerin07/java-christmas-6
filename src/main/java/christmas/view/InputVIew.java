@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.InputValidationHelper;
 import christmas.domain.OrderedMenu;
 import christmas.domain.menu.ChristMasMenu;
+import christmas.domain.menu.Drink;
 import christmas.domain.menu.Menu;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -51,6 +52,11 @@ public class InputVIew {
         for (String menu : menus.keySet()) {
             Menu christmasMenu = ChristMasMenu.findMenu(menu);
             result.add(OrderedMenu.of(christmasMenu, menus.get(menu)));
+        }
+
+        int size = result.stream().filter(e -> !e.isOfType(Drink.class)).toList().size();
+        if (size == 0) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
 
         return result;

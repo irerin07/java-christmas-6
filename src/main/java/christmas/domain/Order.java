@@ -43,11 +43,16 @@ public class Order {
 
     public BigDecimal totalPrice() {
         BigDecimal result = BigDecimal.ZERO;
+
         for (OrderedMenu orderedMenu : orderedMenus) {
             result = result.add(BigDecimal.valueOf(orderedMenu.calculatePrice()));
         }
 
         return result;
+    }
+
+    public boolean isBenefitReceivable() {
+        return isWeekDay() || isWeekend() || isSpecialSaleDay() || isGiftMenu() || isChristmasSalePeriod();
     }
 
     public String getVisitDate() {
@@ -77,10 +82,10 @@ public class Order {
         }
     }
 
-    public long calculateChristmasEventBenefit() {
+    public int calculateChristmasEventBenefit() {
         long between = ChronoUnit.DAYS.between(LocalDate.of(2023, 12, 1), visitDate);
 
-        return 1000 + (between * 100);
+        return (int) (1000 + (between * 100));
     }
 
     public boolean isWeekend() {
