@@ -21,8 +21,9 @@ public enum Drink implements Menu {
         return Arrays.stream(Drink.values()).filter(drink -> drink.name.equals(userInput)).findFirst().orElse(null);
     }
 
-    public String toString() {
-        return name;
+    @Override
+    public String getMenuName(int amount) {
+        return name + " " + amount + "개";
     }
 
     @Override

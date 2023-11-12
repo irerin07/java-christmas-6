@@ -24,13 +24,14 @@ public enum Appetizer implements Menu {
                 .orElse(null);
     }
 
-    public String toString() {
-        return name;
-    }
-
     @Override
     public int calculateTotalPrice(Integer amount) {
         return price * amount;
+    }
+
+    @Override
+    public String getMenuName(int amount) {
+        return name + " " + amount + "개";
     }
 
 }

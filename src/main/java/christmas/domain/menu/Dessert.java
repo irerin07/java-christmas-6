@@ -20,8 +20,9 @@ public enum Dessert implements Menu {
         return Arrays.stream(Dessert.values()).filter(desert -> desert.name.equals(userInput)).findFirst().orElse(null);
     }
 
-    public String toString() {
-        return name;
+    @Override
+    public String getMenuName(int amount) {
+        return name + " " + amount + "개";
     }
 
     @Override

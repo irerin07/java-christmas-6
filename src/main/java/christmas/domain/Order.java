@@ -35,7 +35,7 @@ public class Order {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         for (OrderedMenu orderedMenu : orderedMenus) {
-            sb.append(orderedMenu.toString()).append("\n");
+            sb.append(orderedMenu.getMenuAndAmount()).append("\n");
         }
 
         return sb.toString();

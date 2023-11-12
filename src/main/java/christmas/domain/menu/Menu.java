@@ -6,4 +6,6 @@ public interface Menu {
 
     int calculateTotalPrice(Integer amount);
 
+    String getMenuName(int amount);
+
 }

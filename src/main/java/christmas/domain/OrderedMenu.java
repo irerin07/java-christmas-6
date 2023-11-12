@@ -21,8 +21,8 @@ public class OrderedMenu {
         return new OrderedMenu(menu, amount);
     }
 
-    public String toString() {
-        return menu.toString() + " " + amount + "개";
+    public String getMenuAndAmount() {
+        return menu.getMenuName(amount);
     }
 
     public int calculatePrice() {

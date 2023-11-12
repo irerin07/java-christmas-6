@@ -25,8 +25,9 @@ public enum MainMenu implements Menu{
                 .orElse(null);
     }
 
-    public String toString() {
-        return name;
+    @Override
+    public String getMenuName(int amount) {
+        return name + " " + amount + "개";
     }
 
     @Override
