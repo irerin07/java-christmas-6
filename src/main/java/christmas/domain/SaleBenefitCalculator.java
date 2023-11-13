@@ -15,17 +15,12 @@ public class SaleBenefitCalculator {
                 weekDay(order),
                 weekEnd(order),
                 order.calculateChristmasEventBenefit(),
-                specialDay(order),
-                EventBadge.NONE
+                specialDay(order)
         );
     }
 
     private GiftMenu giftMenu(Order order) {
-        if (order.isGiftMenu()) {
-            return GiftMenu.CHAMPAGNE;
-        }
-
-        return GiftMenu.NONE;
+        return GiftMenu.findByOrderPrice(order.totalPrice().intValue());
     }
 
     private int weekDay(Order order) {

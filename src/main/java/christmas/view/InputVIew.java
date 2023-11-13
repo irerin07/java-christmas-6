@@ -9,11 +9,6 @@ import camp.nextstep.edu.missionutils.Console;
  **********************************************************************************************************************/
 public class InputVIew {
 
-    private static final String DELIMITER = ",";
-    private static final String MENU_REGEX = "^[가-힣]+-\\d+$";
-    private static final Integer EVENT_MONTH = 12;
-    public static final Integer EVENT_YEAR = 2023;
-
     public String getVisitDate(int date) {
         System.out.println(date + "월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
 

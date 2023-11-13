@@ -1,5 +1,7 @@
 package christmas.domain.menu;
 
+import java.util.Arrays;
+
 public enum GiftMenu {
 
     NONE("없음", 0, 0, 119999),
@@ -17,16 +19,26 @@ public enum GiftMenu {
         this.maximumOrderPrice = maximumOrderPrice;
     }
 
-    public static String findByOrderPrice(int minimumOrderPrice) {
-        if (minimumOrderPrice >= CHAMPAGNE.minimumOrderPrice && minimumOrderPrice <= CHAMPAGNE.maximumOrderPrice) {
-            return String.format("%s %d개", CHAMPAGNE.name, 1);
-        }
+    public static GiftMenu findByOrderPrice(int price) {
+        return Arrays.stream(GiftMenu.values())
+                .filter(e -> e.minimumOrderPrice <= price && e.maximumOrderPrice >= price)
+                .findFirst()
+                .orElse(NONE);
+    }
 
-        return NONE.name;
+    public int calculateTotalBenefitProfit(int benefitAmountWithoutGiftMenu) {
+        return price + benefitAmountWithoutGiftMenu;
     }
 
     public int price() {
         return price;
     }
 
+    public String getGiftMenu() {
+        return String.format("%s %d개", name, 1);
+    }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -18,10 +18,10 @@ public enum EventBadge {
         this.maximumAmount = maximumAmount;
     }
 
-    public static EventBadge findByBenefirPrice(int benefirPrice) {
+    public static EventBadge findByBenefitByPrice(int benefitPrice) {
         return Arrays.stream(EventBadge.values())
-                .filter(eventBadge -> eventBadge.minimumAmount <= benefirPrice
-                        && eventBadge.maximumAmount >= benefirPrice)
+                .filter(eventBadge -> eventBadge.minimumAmount <= benefitPrice
+                        && eventBadge.maximumAmount >= benefitPrice)
                 .findFirst()
                 .orElse(NONE);
     }

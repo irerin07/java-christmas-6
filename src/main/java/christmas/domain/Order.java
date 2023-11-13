@@ -32,10 +32,10 @@ public class Order {
         return new Order(receivedTime, visitDate, orderedMenus);
     }
 
-    public String toString() {
+    public String printOrderedMenus() {
         StringBuffer sb = new StringBuffer();
         for (OrderedMenu orderedMenu : orderedMenus) {
-            sb.append(orderedMenu.getMenuAndAmount()).append("\n");
+            sb.append(orderedMenu.getMenuAndAmount()).append(System.lineSeparator());
         }
 
         return sb.toString();
